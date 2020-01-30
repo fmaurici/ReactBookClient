@@ -1,0 +1,19 @@
+body {
+    height: 100%;
+    margin: 0;
+    background-color:black;
+  }
+
+.addButton{
+    color: aqua; 
+    border-bottom-color:aqua;
+}
+
+.darkBackground{
+    background-color:black;
+}
+
+.titleColor{
+    color:aqua;
+}
+

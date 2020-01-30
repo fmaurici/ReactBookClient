@@ -5,6 +5,8 @@ import { ApplicationState } from '../../store';
 import * as BookListStore from '../../store/book/BookList';
 import * as BookStore from '../../store/book/Book';
 import Book from './Book';
+import "../../Site.css"
+import { Link } from 'react-router-dom';
 
 type BookListProps =
     BookListStore.BookListState &
@@ -27,7 +29,7 @@ class BookList extends Component<BookListProps> {
         return (
             <div>
                 <React.Fragment>
-                    <h1 id="tabelLabel">Book List</h1>
+                    <h4 id="tabelLabel" className="titleColor">Book List</h4>
                     {this.renderBooksTable()}
                 </React.Fragment>
 
@@ -37,18 +39,25 @@ class BookList extends Component<BookListProps> {
 
     private renderBooksTable() {
         return (
-            <table className='table table-striped' aria-labelledby="tabelLabel">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Stock</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.props.books.map((book: BookStore.BookState) => <Book id={book.id} key={book.id} />)}
-                </tbody>
-            </table>
+            <div>
+                <table className="table table-dark table-hover darkBackground" aria-labelledby="tabelLabel">
+                    <thead className="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Stock</th>
+                            <th>Price</th>
+                            <th>Author</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.props.books.map((book: BookStore.BookState) => <Book id={book.id} key={book.id} />)}
+                    </tbody>
+                </table>
+
+                <br></br>
+                <Link to="/"><i className=" btn btn-dark addButton">Add New Book</i></Link>
+            </div>
         );
     }
 }

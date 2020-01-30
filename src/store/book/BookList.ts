@@ -44,7 +44,7 @@ export const actionCreators = {
                     dispatch({ type: 'RECEIVE_BOOKS', books: data, search: search});
                 });
 
-            dispatch({ type: 'REQUEST_BOOKS', search: search});//a
+            dispatch({ type: 'REQUEST_BOOKS', search: search});
         }
     }
 };

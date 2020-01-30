@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const Home = () => (
   <div>
-    <h1>Welcome to the Book Store!</h1>
+    <h1 className="titleColor">Welcome to the Book Store!</h1>
   </div>
 );
 
