@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { ApplicationState } from '../../store';
-import * as BookListStore from '../../store/book/BookList';
 import * as BookStore from '../../store/book/Book';
 
 export interface BookId {
@@ -10,18 +9,11 @@ export interface BookId {
 }
 
 type BookProps = BookId &
-    BookListStore.BookState &
+    BookStore.BookState &
     typeof BookStore.actionCreators &
     RouteComponentProps<{}>;
 
 export class Book extends Component<BookProps> {
-    // constructor(props: IProps) {
-    //     super(props);
-    //     this.state = {
-    //         book : this.props.book
-    //     }
-    // }
-
     render() {
         return (
             <tr key={this.props.id}>
@@ -33,9 +25,10 @@ export class Book extends Component<BookProps> {
     }
 }
 
+//Connect selects what properties will be passed to my BookProps (above)
 //This method is a contraction of mapStateToProps and mapDispatchToProps 
 //I pass the applicationState and its own props (in this case:BookId) and I add them to the BookProps (above)
 export default connect(
-    (state: ApplicationState, ownProps: BookId) => state.bookList.books.find(x=>x.id === ownProps.id), // Selects which state properties are merged into the component's props
+    (state: ApplicationState, ownProps: BookId) => state.bookList.books.find(x=>x.id === ownProps.id), // Select the book that I want to map
     BookStore.actionCreators // Selects which action creators are merged into the component's props
 )(Book as any);

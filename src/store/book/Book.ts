@@ -1,5 +1,11 @@
 import { Action, Reducer } from 'redux';
-import { BookState } from './BookList';
+
+export interface BookState {
+    id: string;
+    name: string;
+    stock: number;
+    price: number;
+}
 
 export const actionCreators = {};
 

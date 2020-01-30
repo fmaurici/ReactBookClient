@@ -1,5 +1,6 @@
 import { Action, Reducer } from 'redux';
 import { AppThunkAction } from '..';
+import { BookState } from './Book';
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 
@@ -7,13 +8,6 @@ export interface BookListState {
     books: BookState[];
     isLoading: boolean;
     search: boolean;
-}
-
-export interface BookState {
-    id: string;
-    name: string;
-    stock: number;
-    price: number;
 }
 
 // -----------------
@@ -43,9 +37,7 @@ export const actionCreators = {
     //I can send parameters inside the brackets -> getAllBooksAction (parameterName: type)
     getAllBooksAction: (search: boolean): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const appState = getState();
-        console.log(search);
         if (appState && appState.bookList && appState.bookList.search !== search) {
-            console.log("Get Books from API");
             fetch(`https://localhost:44396/api/Book`)
                 .then(response => response.json() as Promise<BookState[]>)
                 .then(data => {

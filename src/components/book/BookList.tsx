@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { ApplicationState } from '../../store';
 import * as BookListStore from '../../store/book/BookList';
+import * as BookStore from '../../store/book/Book';
 import Book from './Book';
-
-
 
 type BookListProps =
     BookListStore.BookListState &
@@ -47,14 +46,12 @@ class BookList extends Component<BookListProps> {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.props.books.map((book: BookListStore.BookState) => <Book id={book.id} key={book.id} />)}
+                    {this.props.books.map((book: BookStore.BookState) => <Book id={book.id} key={book.id} />)}
                 </tbody>
             </table>
         );
     }
 }
-
-//export default connect(mapStateToProps)(BookList);
 
 export default connect(
     (state: ApplicationState) => state.bookList, // Selects which state properties are merged into the component's props
