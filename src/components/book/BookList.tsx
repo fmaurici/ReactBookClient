@@ -5,6 +5,8 @@ import { ApplicationState } from '../../store';
 import * as BookListStore from '../../store/book/BookList';
 import Book from './Book';
 
+
+
 type BookListProps =
     BookListStore.BookListState &
     typeof BookListStore.actionCreators &
@@ -45,14 +47,16 @@ class BookList extends Component<BookListProps> {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.props.books.map((book: BookListStore.Book) => <Book book={book} key={book.id} />)}
+                    {this.props.books.map((book: BookListStore.BookState) => <Book id={book.id} key={book.id} />)}
                 </tbody>
             </table>
         );
     }
 }
 
+//export default connect(mapStateToProps)(BookList);
+
 export default connect(
-    (state: ApplicationState) => state.books, // Selects which state properties are merged into the component's props
+    (state: ApplicationState) => state.bookList, // Selects which state properties are merged into the component's props
     BookListStore.actionCreators // Selects which action creators are merged into the component's props
 )(BookList as any);

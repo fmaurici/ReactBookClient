@@ -4,12 +4,12 @@ import { AppThunkAction } from '..';
 // STATE - This defines the type of data maintained in the Redux store.
 
 export interface BookListState {
-    books: Book[];
+    books: BookState[];
     isLoading: boolean;
     search: boolean;
 }
 
-export interface Book {
+export interface BookState {
     id: string;
     name: string;
     stock: number;
@@ -27,7 +27,7 @@ interface GetAllBooksAction {
 
 interface ReceiveAllBooksAction {
     type: 'RECEIVE_BOOKS';
-    books: Book[];
+    books: BookState[];
     search: boolean;
 }
 
@@ -44,10 +44,10 @@ export const actionCreators = {
     getAllBooksAction: (search: boolean): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const appState = getState();
         console.log(search);
-        if (appState && appState.books && appState.books.search !== search) {
+        if (appState && appState.bookList && appState.bookList.search !== search) {
             console.log("Get Books from API");
             fetch(`https://localhost:44396/api/Book`)
-                .then(response => response.json() as Promise<Book[]>)
+                .then(response => response.json() as Promise<BookState[]>)
                 .then(data => {
                     dispatch({ type: 'RECEIVE_BOOKS', books: data, search: search});
                 });
