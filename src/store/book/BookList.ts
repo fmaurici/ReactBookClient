@@ -7,7 +7,6 @@ import { BookState, BookStateProps } from './Book';
 export interface BookListState {
     booksState: BookState[];
     isLoading: boolean;
-    search: boolean;
 }
 
 // -----------------
@@ -16,13 +15,11 @@ export interface BookListState {
 
 interface GetAllBooksAction {
     type: 'REQUEST_BOOKS';
-    search: boolean;
 }
 
 interface ReceiveAllBooksAction {
     type: 'RECEIVE_BOOKS';
     booksState: BookState[];
-    search: boolean;
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
@@ -35,9 +32,9 @@ type KnownAction = GetAllBooksAction | ReceiveAllBooksAction;
 
 export const actionCreators = {
     //I can send parameters inside the brackets -> getAllBooksAction (parameterName: type)
-    getAllBooksAction: (search: boolean): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    getAllBooksAction: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const appState = getState();
-        if (appState && appState.bookList && appState.bookList.search !== search) {
+        if (appState && appState.bookList) {
             fetch(`https://localhost:44396/api/Book`)
                 .then(response => response.json() as Promise<BookStateProps[]>)
                 .then(data => {
@@ -52,10 +49,10 @@ export const actionCreators = {
                         bookStates.push(bookState);
                     });
 
-                    dispatch({ type: 'RECEIVE_BOOKS', booksState: bookStates, search: search });
+                    dispatch({ type: 'RECEIVE_BOOKS', booksState: bookStates });
                 });
 
-            dispatch({ type: 'REQUEST_BOOKS', search: search });
+            dispatch({ type: 'REQUEST_BOOKS'});
         }
     }
 };
@@ -63,7 +60,7 @@ export const actionCreators = {
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-const unloadedState: BookListState = { booksState: [], isLoading: false, search: false };
+const unloadedState: BookListState = { booksState: [], isLoading: false};
 
 //Esto es una funcion flecha
 export const reducer: Reducer<BookListState> = (
@@ -78,17 +75,15 @@ export const reducer: Reducer<BookListState> = (
     const action = incomingAction as KnownAction;
     switch (action.type) {
         case 'REQUEST_BOOKS':
-            return {
+            return Object.assign({},{
                 booksState: state.booksState,
                 isLoading: true,
-                search: action.search
-            };
+            });
         case 'RECEIVE_BOOKS':
-            return {
+            return  Object.assign({},{
                 booksState: action.booksState,
                 isLoading: true,
-                search: action.search
-            };
+            });
         default: {
             return state;
         }

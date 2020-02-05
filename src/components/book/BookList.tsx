@@ -16,14 +16,19 @@ type BookListProps =
 class BookList extends Component<BookListProps> {
 
     async componentDidMount() {
-        var search = true;
-        this.props.getAllBooksAction(search);
+        console.log("did mount")
+        this.props.getAllBooksAction();
     }
 
     // public componentDidUpdate() {
-    //     console.log("update called")
-    //     this.props.getAllBooksAction(true);
+    //     console.log("did update")
+    //    // this.props.getAllBooksAction();
     // }
+
+    updateList = () => {
+        console.log("update after delete")
+        this.props.getAllBooksAction();
+    }
 
     render() {
         return (
@@ -51,7 +56,7 @@ class BookList extends Component<BookListProps> {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.booksState.map((bookState: BookStore.BookState) => <Book id={bookState.book.id} key={bookState.book.id} />)}
+                        {this.props.booksState.map((bookState: BookStore.BookState) => <Book id={bookState.book.id} key={bookState.book.id} action={this.updateList} />)}
                     </tbody>
                 </table>
 

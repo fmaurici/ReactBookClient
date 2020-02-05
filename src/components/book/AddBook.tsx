@@ -19,27 +19,21 @@ type BookProps = BookParameters &
 
 export class AddBook extends Component<BookProps> {
 
-    onSubmit = async (values: any) => {
-        
-        this.props.addBookAction(values);
+    redirect = () => {
+        this.props.history.push('/bookList');
     }
-
-    onChange = (e: any, prevVal : any) => {
-        console.log( [e.target.name], Number(e.target.value), prevVal)
-        //[e.target.name] = e.target.value
+    
+    onSubmit = async (values: any) => {
+        this.props.addBookAction(values, this.redirect);
     }
 
     render() {
-        if (this.props.redirect) {
-            this.props.history.push('/bookList');
-        }
-
         return (
             <div className="row">
                 <div className="col-md-6">
                     <Form
                         onSubmit={this.onSubmit}
-                        
+
                         initialValues={{
                             name: this.props.book.name,
                             stock: this.props.book.stock,

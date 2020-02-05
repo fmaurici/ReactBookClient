@@ -22,19 +22,28 @@ export interface Author {
 //Actions
 interface AddBookAction {
     type: 'ADD_BOOK';
+    book: BookStateProps;
+    redirect: any;
 }
 
 interface EditBookAction {
     type: 'EDIT_BOOK';
+    book: BookStateProps;
+    redirect: any;
 }
 
-type KnownAction = AddBookAction | EditBookAction;
+interface DeleteBookAction {
+    type: 'DELETE_BOOK';
+    bookId: string;
+    redirect: any;
+}
+
+type KnownAction = AddBookAction | EditBookAction | DeleteBookAction;
 
 //Action Creator
 export const actionCreators = {
-    addBookAction: (book: BookStateProps): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    addBookAction: (book: BookStateProps, redirect: any): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const appState = getState();
-        console.log(book as BookStateProps);
         if (appState) {
             fetch(`https://localhost:44396/api/Book`, {
                 headers: {
@@ -43,7 +52,24 @@ export const actionCreators = {
                 method: 'POST',
                 body: JSON.stringify(book)
             })
+            .then(redirect)
 
+            dispatch({ type: 'ADD_BOOK', book: book, redirect: redirect });
+        }
+    },
+    deleteBookAction: (bookId: string, redirect: any): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        const appState = getState();
+        if (appState) {
+            fetch(`https://localhost:44396/api/Book/` + bookId, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'DELETE',
+            })
+            .then(redirect)
+
+
+            dispatch({ type: 'DELETE_BOOK', bookId: bookId, redirect: redirect});
         }
     }
 };
@@ -54,7 +80,7 @@ export const reducer: Reducer<BookState> = (
     state: BookState | undefined,
     incomingAction: Action
 ): BookState => {
-
+    
     if (state === undefined) {
         return unloadedState;
     }
@@ -62,15 +88,20 @@ export const reducer: Reducer<BookState> = (
     const action = incomingAction as KnownAction;
     switch (action.type) {
         case 'ADD_BOOK':
-            return {
+            return  Object.assign({},{
                 book: state.book,
-                redirect: false
-            };
+                redirect: state.redirect
+            });
         case 'EDIT_BOOK':
-            return {
+            return  Object.assign({},{
                 book: state.book,
-                redirect: false
-            };
+                redirect: state.redirect
+            });
+        case 'DELETE_BOOK':
+            return  Object.assign({},{
+                book: state.book,
+                redirect: state.redirect
+            });
         default: {
             return state;
         }
