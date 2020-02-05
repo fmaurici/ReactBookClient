@@ -20,13 +20,15 @@ const store = configureStore(history);
 ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
-        <div className="darkBackground"><App /></div>
-        <footer className="footer text-muted darkBackground">
-            <br></br>
-        <div className="container">
-            &copy; 2020 - Book Store React Client
-        </div>
-    </footer>
+            <div className="darkBackground">
+                <App />
+            </div>
+            <footer className="footer text-muted darkBackground">
+                <br></br>
+                <div className="container">
+                    &copy; 2020 - Book Store React Client
+                </div>
+            </footer>
         </ConnectedRouter>
     </Provider>,
     document.getElementById('root'));

@@ -4,6 +4,10 @@ body {
     background-color:black;
   }
 
+.inputLabel{
+    color: aqua; 
+}
+
 .addButton{
     color: aqua; 
     border-bottom-color:aqua;

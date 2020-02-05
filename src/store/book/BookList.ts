@@ -1,11 +1,11 @@
 import { Action, Reducer } from 'redux';
 import { AppThunkAction } from '..';
-import { BookState } from './Book';
+import { BookState, BookStateProps } from './Book';
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 
 export interface BookListState {
-    books: BookState[];
+    booksState: BookState[];
     isLoading: boolean;
     search: boolean;
 }
@@ -21,7 +21,7 @@ interface GetAllBooksAction {
 
 interface ReceiveAllBooksAction {
     type: 'RECEIVE_BOOKS';
-    books: BookState[];
+    booksState: BookState[];
     search: boolean;
 }
 
@@ -39,12 +39,23 @@ export const actionCreators = {
         const appState = getState();
         if (appState && appState.bookList && appState.bookList.search !== search) {
             fetch(`https://localhost:44396/api/Book`)
-                .then(response => response.json() as Promise<BookState[]>)
+                .then(response => response.json() as Promise<BookStateProps[]>)
                 .then(data => {
-                    dispatch({ type: 'RECEIVE_BOOKS', books: data, search: search});
+                    //Fill BookStates to be shown
+                    var bookStates : BookState[] = [];
+                    data.forEach(book => {
+                        const bookState = {
+                            book: book,
+                            redirect: false
+                        } as BookState
+
+                        bookStates.push(bookState);
+                    });
+
+                    dispatch({ type: 'RECEIVE_BOOKS', booksState: bookStates, search: search });
                 });
 
-            dispatch({ type: 'REQUEST_BOOKS', search: search});
+            dispatch({ type: 'REQUEST_BOOKS', search: search });
         }
     }
 };
@@ -52,7 +63,7 @@ export const actionCreators = {
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-const unloadedState: BookListState = { books: [], isLoading: false, search:false };
+const unloadedState: BookListState = { booksState: [], isLoading: false, search: false };
 
 //Esto es una funcion flecha
 export const reducer: Reducer<BookListState> = (
@@ -68,13 +79,13 @@ export const reducer: Reducer<BookListState> = (
     switch (action.type) {
         case 'REQUEST_BOOKS':
             return {
-                books: state.books,
+                booksState: state.booksState,
                 isLoading: true,
                 search: action.search
             };
         case 'RECEIVE_BOOKS':
             return {
-                books: action.books,
+                booksState: action.booksState,
                 isLoading: true,
                 search: action.search
             };

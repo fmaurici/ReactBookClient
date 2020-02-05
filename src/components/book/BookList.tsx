@@ -51,12 +51,12 @@ class BookList extends Component<BookListProps> {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.books.map((book: BookStore.BookState) => <Book id={book.id} key={book.id} />)}
+                        {this.props.booksState.map((bookState: BookStore.BookState) => <Book id={bookState.book.id} key={bookState.book.id} />)}
                     </tbody>
                 </table>
 
                 <br></br>
-                <Link to="/"><i className=" btn btn-dark addButton">Add New Book</i></Link>
+                <Link to="/addBook"><i className=" btn btn-dark addButton">Add New Book</i></Link>
             </div>
         );
     }
