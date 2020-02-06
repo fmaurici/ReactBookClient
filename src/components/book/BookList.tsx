@@ -16,7 +16,6 @@ type BookListProps =
 class BookList extends Component<BookListProps> {
 
     async componentDidMount() {
-        console.log("did mount")
         this.props.getAllBooksAction();
     }
 
@@ -26,7 +25,6 @@ class BookList extends Component<BookListProps> {
     // }
 
     updateList = () => {
-        console.log("update after delete")
         this.props.getAllBooksAction();
     }
 

@@ -5,6 +5,7 @@ import { ApplicationState } from '../../store';
 import * as BookStore from '../../store/book/Book';
 import { Link } from 'react-router-dom';
 import { Form, Field } from 'react-final-form'
+import SelectList from '../utilities/SelectList';
 
 export interface BookParameters {
     id: string,
@@ -19,12 +20,27 @@ type BookProps = BookParameters &
 
 export class AddBook extends Component<BookProps> {
 
+    // constructor(props: BookProps) {
+    //     super(props);
+        
+    //     // this.state = {
+    //     //     authors: this.props.getAuthors()
+    //     // }
+
+        
+    // }
+
     redirect = () => {
         this.props.history.push('/bookList');
     }
-    
+
     onSubmit = async (values: any) => {
+        console.log(values)
         this.props.addBookAction(values, this.redirect);
+    }
+
+    async componentDidMount() {
+        this.props.getAuthors();
     }
 
     render() {
@@ -54,6 +70,20 @@ export class AddBook extends Component<BookProps> {
                                     <div className="form-group col-md-6">
                                         <label className="inputLabel">Price</label>
                                         <Field type="number" name="price" className="form-control" component="input" parse={value => value && Number(value)} />
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                        <label className="inputLabel">Author</label>
+                                        <Field name="author.Id" options={this.props.authors} >
+                                            {({ input, meta, options }) => {
+                                                return (
+                                                    <SelectList
+                                                        options={options}
+                                                        name={input.name}
+                                                        onChange={(value: string) => input.onChange(value)}
+                                                    />
+                                                )
+                                            }}
+                                        </Field>
                                     </div>
                                 </div>
                                 <div className="form-row">

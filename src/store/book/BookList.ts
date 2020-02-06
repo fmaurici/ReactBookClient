@@ -75,15 +75,15 @@ export const reducer: Reducer<BookListState> = (
     const action = incomingAction as KnownAction;
     switch (action.type) {
         case 'REQUEST_BOOKS':
-            return Object.assign({},{
+            return {...state,
                 booksState: state.booksState,
                 isLoading: true,
-            });
+            };
         case 'RECEIVE_BOOKS':
-            return  Object.assign({},{
+            return  {...state,
                 booksState: action.booksState,
                 isLoading: true,
-            });
+            };
         default: {
             return state;
         }
