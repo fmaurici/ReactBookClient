@@ -35,7 +35,7 @@ export const actionCreators = {
     getAllBooksAction: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const appState = getState();
         if (appState && appState.bookList) {
-            fetch(`https://localhost:44396/api/Book`)
+            fetch(`http://52.142.27.15/api/Book`)
                 .then(response => response.json() as Promise<BookStateProps[]>)
                 .then(data => {
                     //Fill BookStates to be shown

@@ -36,6 +36,7 @@ export class AddBook extends Component<BookProps> {
 
     onSubmit = async (values: any) => {
         console.log(values)
+        //Arreglar que cuando no cambio el author no me lo setea bien
         this.props.addBookAction(values, this.redirect);
     }
 
