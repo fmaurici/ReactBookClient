@@ -1,10 +1,12 @@
 import * as BookList from './book/BookList';
 import * as Book from './book/Book';
+import * as Login from './shared/Login';
 
 // The top-level state object
 export interface ApplicationState {
     bookList: BookList.BookListState;
     book: Book.BookState;
+    logIn: Login.LoginState 
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
@@ -12,7 +14,8 @@ export interface ApplicationState {
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
     bookList: BookList.reducer,
-    book: Book.reducer
+    book: Book.reducer,
+    logIn: Login.reducer
 };
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

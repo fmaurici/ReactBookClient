@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import LoginPartial from './LoginPartial';
 
 export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }> {
     public state = {
@@ -15,12 +16,19 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
                         <NavbarBrand className="navbar-brand" style={{ color: '#00ffff' }} tag={Link} to="/">React Book Store</NavbarBrand>
                         <NavbarToggler onClick={this.toggle} className="mr-2 " />
                         <Collapse className="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} style={{ color: '#00ffff' }} navbar>
+                            <LoginPartial />
                             <ul className="navbar-nav flex-grow-1">
                                 <NavItem>
                                     <NavLink tag={Link} className="nav-link text text-light" to="/">Home</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={Link} className="nav-link text text-light" to="/bookList">Books</NavLink>
+                                    <NavLink tag={Link} className="nav-link text text-light" to="/bookList">Book List</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} className="nav-link text text-light" to="/authorList">Author List</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} className="nav-link text text-light" to="/administration">Administration</NavLink>
                                 </NavItem>
                             </ul>
                         </Collapse>

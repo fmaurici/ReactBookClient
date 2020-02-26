@@ -35,7 +35,7 @@ export const actionCreators = {
     getAllBooksAction: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const appState = getState();
         if (appState && appState.bookList) {
-            fetch(`http://52.142.27.15/api/Book`)
+            fetch(`https://localhost:44396/api/Book`)
                 .then(response => response.json() as Promise<BookStateProps[]>)
                 .then(data => {
                     //Fill BookStates to be shown
@@ -81,6 +81,7 @@ export const reducer: Reducer<BookListState> = (
             };
         case 'RECEIVE_BOOKS':
             return  {...state,
+                //Here I'm updating the state with the state that comes from the ACTION
                 booksState: action.booksState,
                 isLoading: true,
             };

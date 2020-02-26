@@ -43,8 +43,8 @@ class BookList extends Component<BookListProps> {
     private renderBooksTable() {
         return (
             <div>
-                <table className="table table-dark table-hover darkBackground" aria-labelledby="tabelLabel">
-                    <thead className="thead-dark">
+                <table className="table table-dark table-hover table-background-black" aria-labelledby="tabelLabel">
+                    <thead className="thead-dark thead-aqua">
                         <tr>
                             <th>Name</th>
                             <th>Stock</th>

@@ -22,12 +22,12 @@ export class AddBook extends Component<BookProps> {
 
     // constructor(props: BookProps) {
     //     super(props);
-        
+
     //     // this.state = {
     //     //     authors: this.props.getAuthors()
     //     // }
 
-        
+
     // }
 
     redirect = () => {
@@ -46,58 +46,61 @@ export class AddBook extends Component<BookProps> {
 
     render() {
         return (
-            <div className="row">
-                <div className="col-md-6">
-                    <Form
-                        onSubmit={this.onSubmit}
+            <div>
+                <h4>{this.props.action} Book</h4>
+                <div className="row">
+                    <div className="col-md-6">
+                        <Form
+                            onSubmit={this.onSubmit}
 
-                        initialValues={{
-                            name: this.props.book.name,
-                            stock: this.props.book.stock,
-                            price: this.props.book.price,
-                        }}
+                            initialValues={{
+                                name: this.props.book.name,
+                                stock: this.props.book.stock,
+                                price: this.props.book.price,
+                            }}
 
-                        render={({ handleSubmit, form, submitting, pristine, values }) => (
-                            <form onSubmit={handleSubmit}>
-                                <div className="form-group">
-                                    <label className="inputLabel">Name</label>
-                                    <Field type="text" name="name" className="form-control" component="input" />
-                                </div>
-                                <div className="form-row">
-                                    <div className="form-group col-md-6">
-                                        <label className="inputLabel">Stock</label>
-                                        <Field type="number" name="stock" className="form-control" component="input" parse={value => value && Number(value)} />
+                            render={({ handleSubmit, form, submitting, pristine, values }) => (
+                                <form onSubmit={handleSubmit}>
+                                    <div className="form-group">
+                                        <label className="inputLabel">Name</label>
+                                        <Field type="text" name="name" className="form-control" component="input" />
                                     </div>
-                                    <div className="form-group col-md-6">
-                                        <label className="inputLabel">Price</label>
-                                        <Field type="number" name="price" className="form-control" component="input" parse={value => value && Number(value)} />
+                                    <div className="form-row">
+                                        <div className="form-group col-md-6">
+                                            <label className="inputLabel">Stock</label>
+                                            <Field type="number" name="stock" className="form-control" component="input" parse={value => value && Number(value)} />
+                                        </div>
+                                        <div className="form-group col-md-6">
+                                            <label className="inputLabel">Price</label>
+                                            <Field type="number" name="price" className="form-control" component="input" parse={value => value && Number(value)} />
+                                        </div>
+                                        <div className="form-group col-md-6">
+                                            <label className="inputLabel">Author</label>
+                                            <Field name="author.Id" options={this.props.authors} >
+                                                {({ input, meta, options }) => {
+                                                    return (
+                                                        <SelectList
+                                                            options={options}
+                                                            name={input.name}
+                                                            onChange={(value: string) => input.onChange(value)}
+                                                        />
+                                                    )
+                                                }}
+                                            </Field>
+                                        </div>
                                     </div>
-                                    <div className="form-group col-md-6">
-                                        <label className="inputLabel">Author</label>
-                                        <Field name="author.Id" options={this.props.authors} >
-                                            {({ input, meta, options }) => {
-                                                return (
-                                                    <SelectList
-                                                        options={options}
-                                                        name={input.name}
-                                                        onChange={(value: string) => input.onChange(value)}
-                                                    />
-                                                )
-                                            }}
-                                        </Field>
+                                    <div className="form-row">
+                                        <div className="form-group col-md-6">
+                                            <button type="submit" disabled={submitting || pristine} className="btn btn-primary btn-block" value="Add New Book">Add New Book</button>
+                                        </div>
+                                        <div className="form-group col-md-6">
+                                            <Link to="/BookList" className="btn btn-secondary btn-block"><i className="fa fa-table"></i> Back to Book List</Link>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="form-row">
-                                    <div className="form-group col-md-6">
-                                        <button type="submit" disabled={submitting || pristine} className="btn btn-dark addButton btn-block" value="Add New Book">Add New Book</button>
-                                    </div>
-                                    <div className="form-group col-md-6">
-                                        <Link to="/BookList" className="btn btn-secondary btn-block"><i className="fa fa-table"></i> Back to Book List</Link>
-                                    </div>
-                                </div>
-                            </form>
-                        )}
-                    />
+                                </form>
+                            )}
+                        />
+                    </div>
                 </div>
             </div>
         )

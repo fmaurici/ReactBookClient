@@ -55,7 +55,7 @@ export const actionCreators = {
     addBookAction: (book: BookStateProps, redirect: any): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const appState = getState();
         if (appState) {
-            fetch(`http://52.142.27.15/api/Book`, {
+            fetch(`https://localhost:44396/api/Book`, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -70,7 +70,7 @@ export const actionCreators = {
     deleteBookAction: (bookId: string, redirect: any): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const appState = getState();
         if (appState) {
-            fetch(`http://52.142.27.15/api/Book/` + bookId, {
+            fetch(`https://localhost:44396/Book/` + bookId, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -85,7 +85,7 @@ export const actionCreators = {
     getAuthors: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const appState = getState();
         if (appState && appState.book.authors) {
-            fetch(`http://52.142.27.15/api/Author`)
+            fetch(`https://localhost:44396/api/Author`)
                 .then(response => response.json() as Promise<Author[]>)
                 .then(data => {
                     console.log(data)

@@ -30,7 +30,8 @@ export class Book extends Component<BookProps> {
                 <td>{this.props.book.price}</td>
                 <td>{this.props.book.author && this.props.book.author.name}</td>
                 <td>
-                    <Link to="/addBook"><i className="btn btn-outline-info mx-1">Editar</i></Link>
+                    <Link to="/addBook"><i className="btn btn-outline-dark mx-1">History</i></Link>
+                    <Link to="/addBook"><i className="btn btn-outline-info mx-1">Edit</i></Link>
                     <button onClick={()=> {this.deleteBook(this.props.id)}} className="btn btn-outline-danger mx-1">Delete</button>
                     <Link to="/rentBook"><i className="btn btn-outline-warning mx-1">Rent</i></Link>
                     <Link to="/returnBook"><i className="btn btn-outline-secondary mx-1">Return</i></Link>
